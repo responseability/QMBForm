@@ -87,8 +87,11 @@ public class RowDescriptor<T> extends FormItemDescriptor {
 
     private SectionDescriptor mSectionDescriptor;
 
+    // SSharpe : Modification for Responseablity, use a regular String to allow for setting dynamic strings
+    //           as well as string resource IDs
     private int mHint = android.R.string.untitled;
-
+    private String mHintString = null;
+    
     private boolean mLastRowInSection = false;
 
     public static RowDescriptor newInstance(String tag) {
@@ -189,15 +192,23 @@ public class RowDescriptor<T> extends FormItemDescriptor {
         mDisabled = disabled;
     }
 
+    // SSharpe : Modification for Responseablity, use a regular String to allow for setting dynamic strings
+    //           as well as string resource IDs
     public void setHint(int hint) {
         mHint = hint;
+        mHintString = null;
     }
 
-    public int getHint() {
-        return mHint;
+    public void setHint(String hintString) {
+        mHintString = hintString;
+        mHint = android.R.string.untitled;
     }
 
     public String getHint(Context context) {
+
+        if (mHintString != null) {
+            return mHintString;
+        }
 
         if (mHint == android.R.string.untitled) {
             return null;
@@ -205,6 +216,8 @@ public class RowDescriptor<T> extends FormItemDescriptor {
         return context.getString(mHint);
 
     }
+
+
 
     public boolean isValid() {
         boolean valid = true;
