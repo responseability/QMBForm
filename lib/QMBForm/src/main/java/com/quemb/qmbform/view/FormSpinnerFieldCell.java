@@ -76,6 +76,9 @@ public class FormSpinnerFieldCell extends FormTitleFieldCell {
 
             }
         });
+
+        // SSharpe : modification for RA
+        mSpinner.setEnabled(!getRowDescriptor().getDisabled());
     }
 
     @Override
