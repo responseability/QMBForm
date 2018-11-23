@@ -91,7 +91,7 @@ public class RowDescriptor<T> extends FormItemDescriptor {
     //           as well as string resource IDs
     private int mHint = android.R.string.untitled;
     private String mHintString = null;
-    
+
     private boolean mLastRowInSection = false;
 
     public static RowDescriptor newInstance(String tag) {
