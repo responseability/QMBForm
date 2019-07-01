@@ -59,6 +59,7 @@ public class CellViewFactory {
 
     private static CellViewFactory instance = null;
     private HashMap<String, Class<? extends FormBaseCell>> mViewRowTypeMap;
+    private String mUnsupportedRowType = RowDescriptor.FormRowDescriptorTypeDetail;
 
     public static CellViewFactory getInstance() {
         if (instance == null) {
@@ -122,6 +123,11 @@ public class CellViewFactory {
         mViewRowTypeMap.put(RowDescriptor.FormRowDescriptorTypeHtmlVertical, FormDetailHtmlTextVerticalFieldCell.class);
     }
 
+    // SSharpe : Modification for Responseablity, allow us to query override the unsupported row type
+    public void setUnsupportedRowType(String rowType) {
+        mUnsupportedRowType = rowType;
+    }
+
     public Cell createViewForFormItemDescriptor(Context context, FormItemDescriptor descriptor) {
 
         Cell rowView = null;
@@ -139,7 +145,7 @@ public class CellViewFactory {
                 // Fallback to FormRowDescriptorTypeDetail if no RowType is defined
                 String rowType = row.getRowType();
                 if (!mViewRowTypeMap.containsKey(rowType)){
-                    rowType = RowDescriptor.FormRowDescriptorTypeDetail;
+                    rowType = mUnsupportedRowType;
                 }
 
                 formBaseCell = mViewRowTypeMap.get(rowType).getConstructor(Context.class, RowDescriptor.class).newInstance(
